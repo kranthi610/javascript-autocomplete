@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+#autocomplete{
+    width:50%;
+    padding:10px;
+    position:relative;
+}
+
+#load {
+    width:50%;
+    position:absolute;
+}
+
+#load span {
+	background-color:grey;
+    display:block;
+    padding:10px;border: 1px solid #ddd;
+    margin-top: -1px; /* Prevent double borders */
+    background-color: #f6f6f6;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    cursor:pointer;
+}
+
+
+#load {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#load span{
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+</style>
+
+</head>
+<body>
+<div class="autocomplete">
+	<input type="text" id ="autocomplete" autocomplete="off">
+  	<div id="load"></div>
+</div>
+<script>
+$(document).ready(function(){
+	var obj = ['kranthi','mango','aloe','MANGO'];
+
+    $('#autocomplete').on('keyup',function()
+    {
+    	pattern = $(this).val();
+        //return an array of matching strings
+        var matching = obj.filter( function(age){ 
+        									var re = new RegExp(pattern, 'i');
+											return age.match(re)
+                                   },pattern);
+                                   
+        var _len = matching.length;
+        $('#load').html('');
+        $('#load').css('display','block');
+        for (var i = 0;i<_len;i++)
+        {
+        	$('#load').append( '<span>'+matching[i]+'</span><br>');
+        }
+    });
+    $('body').on('click', '#load span', function() {
+    	$('#autocomplete').val( $(this).text() );
+        $('#load').html('');
+        $('#load').css('display','none');
+    });
+
+});
+</script>
+</body>
+</html>
